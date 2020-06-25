@@ -1,4 +1,4 @@
-# $NetBSD: Makefile,v 1.44 2018/11/15 13:46:07 schmonz Exp $
+# $NetBSD: Makefile,v 1.46 2020/06/25 05:42:37 schmonz Exp $
 
 DISTNAME=		ucspi-tcp-0.88
 PKGREVISION=		6
@@ -7,7 +7,7 @@ MASTER_SITES=		http://cr.yp.to/ucspi-tcp/ ftp://cr.yp.to/ucspi-tcp/
 DISTFILES=		${DISTNAME}.tar.gz ${MANPAGES}
 
 MAINTAINER=		schmonz@NetBSD.org
-HOMEPAGE=		http://cr.yp.to/ucspi-tcp.html
+HOMEPAGE=		https://cr.yp.to/ucspi-tcp.html
 COMMENT=		Command-line tools for building TCP client-server applications
 LICENSE=		public-domain
 
@@ -22,6 +22,8 @@ CONFLICTS+=		ucspi-tcp6-[0-9]*
 
 DJB_RESTRICTED=		no
 
+SUBST_CLASSES+=		djberrno
+
 SUBST_CLASSES+=		etc
 SUBST_STAGE.etc=	do-configure
 SUBST_FILES.etc=	dns_rcrw.c
@@ -31,6 +33,8 @@ SUBST_MESSAGE.etc=	Fixing prefix.
 BUILD_DEFS+=		PKG_SYSCONFBASE
 
 INSTALLATION_DIRS=	bin ${PKGMANDIR}/man1
+
+.include "options.mk"
 
 post-install:
 	cd ${WRKDIR}/${PKGNAME_NOREV}-man; for i in 1; do	 	\
